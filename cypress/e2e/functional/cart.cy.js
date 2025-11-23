@@ -43,7 +43,6 @@ describe('Fonctionnel – Panier', () => {
                     cy.log('Stock initial:', stockText)
                     const stockInitial = parseInt(stockText, 10)
 
-                    // On vérifie juste qu'on a un nombre > 1
                     expect(stockInitial).to.be.greaterThan(1)
 
                     // 4. Ajouter 1 au panier
@@ -89,7 +88,6 @@ describe('Fonctionnel – Panier', () => {
             // Quantité > 20
             cy.get('[data-cy="detail-product-quantity"]').clear().type('999')
             cy.get('[data-cy="detail-product-add"]').click()
-            // Tu observeras ce qui se passe et tu le décriras dans le bilan.
         })
     })
 })

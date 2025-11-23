@@ -68,7 +68,7 @@ ou
 npm install (si vous préférez)
 ```
 
-L'application Angular sera accessible sur : 
+L'application Angular sera accessible sur :
 
 ```
 http://localhost:4200
@@ -82,7 +82,7 @@ Depuis la racine du projet :
 npm install
 ```
 
-Puis lancer Cypress en mode interface : 
+Puis lancer Cypress en mode interface :
 
 ```
 npx cypress open
@@ -173,7 +173,7 @@ En situation de ressources limitées, les scénarios Connexion et Panier sont do
 
 10. Exécuter tous les tests
 
-Une fois Cypress ouvert via : 
+Une fois Cypress ouvert via :
 
 ```
 npx cypress open

@@ -41,11 +41,8 @@ describe('API - Auth & Orders', () => {
         cy.request({
             method: 'GET',
             url: `${apiUrl}/orders`,
-            failOnStatusCode: false, // on s’attend à un 4xx
+            failOnStatusCode: false,
         }).then((response) => {
-            // COMPORTEMENT MÉTIER ATTENDU : 403 (forbidden)
-            // COMPORTEMENT OBSERVÉ : 401 (unauthorized)
-            // -> le test sera rouge, et tu le décris comme anomalie dans le bilan.
             expect(response.status).to.eq(403)
         })
     })
@@ -57,7 +54,7 @@ describe('API - Auth & Orders', () => {
             cy.request({
                 method: 'GET',
                 url: `${apiUrl}/orders`,
-                failOnStatusCode: false, // 200 ou 404
+                failOnStatusCode: false,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -143,7 +140,6 @@ describe('API - Auth & Orders', () => {
                     },
                     failOnStatusCode: false,
                 }).then((response) => {
-                    // Attendu métier : 4xx
                     expect(response.status).to.be.within(400, 499)
                 })
             })

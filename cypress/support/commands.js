@@ -1,25 +1,37 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// Connexion via l'UI
+Cypress.Commands.add('loginUI', () => {
+    cy.fixture('user').then(({ validUser }) => {
+        cy.visit('/')
+
+        cy.get('[data-cy="nav-link-login"]').click()
+
+        cy.get('[data-cy="login-input-username"]').clear().type(validUser.username)
+        cy.get('[data-cy="login-input-password"]').clear().type(validUser.password)
+        cy.get('[data-cy="login-submit"]').click()
+
+        // On NE RESSORT de la commande qu'une fois connecté
+        cy.get('[data-cy="nav-link-cart"]').should('be.visible')
+    })
+})
+
+
+
+// Connexion via l'API
+Cypress.Commands.add('loginApi', () => {
+    const apiUrl = Cypress.env('apiUrl')
+
+    cy.fixture('user').then(({ validUser }) => {
+        cy.request('POST', `${apiUrl}/login`, {
+            username: validUser.username,
+            password: validUser.password,
+        }).then((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body).to.have.property('token')
+
+            const token = response.body.token
+            cy.wrap(token).as('authToken')
+        })
+    })
+})
+
+
